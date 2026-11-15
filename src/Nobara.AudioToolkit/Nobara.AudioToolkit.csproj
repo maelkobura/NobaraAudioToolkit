@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+
+    <PackageId>Nobara.AudioToolkit</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Maël Kobura</Authors>
+    <Description>Reads WAV and FLAC files and encodes audio to Ogg Vorbis with libvorbis, the reference encoder, for build tools. Ships the native library for win-x64.</Description>
+    <PackageTags>audio;vorbis;ogg;flac;wav;encoder</PackageTags>
+    <PackageLicenseExpression>MIT AND BSD-3-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/maelkobura/NobaraAudioToolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/maelkobura/NobaraAudioToolkit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <!-- The native library, built by scripts/build-native.ps1 into artifacts/native/. -->
+  <PropertyGroup>
+    <NativeDirectory>$(MSBuildThisFileDirectory)..\..\artifacts\native\win-x64\</NativeDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(NativeDirectory)nat_vorbis.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Visible="false" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="/" Visible="false" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="/" Visible="false" />
+    <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="/" Visible="false" />
+  </ItemGroup>
+
+  <Target Name="CheckNativeLibrary" BeforeTargets="GenerateNuspec">
+    <Error Condition="!Exists('$(NativeDirectory)nat_vorbis.dll')" Text="The native library is missing: run scripts/build-native.ps1 first." />
+  </Target>
+
+</Project>
