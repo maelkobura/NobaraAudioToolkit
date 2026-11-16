@@ -48,8 +48,13 @@ reference samples are made by `make-fixtures.py` with ffmpeg.
 ## Releases
 
 A tag `v<version>` that matches the `<Version>` of the project builds,
-tests, packs, and publishes the package to nuget.org, with the secret
-`NUGET_API_KEY` of the repository.
+tests, packs, and publishes the package to nuget.org through
+[Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing):
+the workflow exchanges a GitHub OIDC token for a short-lived API key, so the
+repository stores no NuGet key. This needs a Trusted Publishing policy on
+nuget.org for this repository and the workflow file `ci.yml`, and the
+repository variable `NUGET_USER` set to the nuget.org user name of the
+package owner.
 
 ## License
 
