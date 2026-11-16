@@ -1,0 +1,6 @@
+[submodule "native/ogg"]
+	path = native/ogg
+	url = https://github.com/xiph/ogg.git
+[submodule "native/vorbis"]
+	path = native/vorbis
+	url = https://github.com/xiph/vorbis.git
